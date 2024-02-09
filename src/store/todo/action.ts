@@ -14,4 +14,11 @@ const deleteTodo = (payload: todoDataType) => {
   };
 };
 
-export { addTodo, deleteTodo };
+const updateTodo = (payload: todoDataType) => {
+  return {
+    type: 'UPDATE_TODO',
+    payload: payload,
+  };
+};
+
+export { addTodo, deleteTodo, updateTodo };

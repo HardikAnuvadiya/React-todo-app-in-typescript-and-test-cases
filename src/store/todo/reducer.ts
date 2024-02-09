@@ -19,6 +19,15 @@ export const todoReducer = (
         ...state,
         arrTodo: newTodoArr,
       };
+    case 'UPDATE_TODO':
+      const updatedTodoArr = state.arrTodo.map((todo: todoDataType) => {
+        if (todo.id === action?.payload?.id) return action.payload;
+        else return todo;
+      });
+      return {
+        ...state,
+        arrTodo: updatedTodoArr,
+      };
     default:
       return state;
   }

@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { todoDataType } from './types';
 import { RootState } from '../store';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, deleteTodo } from '../store/todo/action';
+import { addTodo, deleteTodo, updateTodo } from '../store/todo/action';
 
 export const Todo = () => {
   const arrTodo = useSelector((state: RootState) => state.todoState.arrTodo);
   const dispatch = useDispatch();
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState({ id: 0, todo: '' });
 
   return (
     <div>
@@ -15,20 +15,34 @@ export const Todo = () => {
       <input
         type='text'
         className='todo-input'
-        value={inputValue}
+        value={inputValue.todo}
         onChange={(e) => {
-          setInputValue(e.target.value);
+          setInputValue({ ...inputValue, todo: e.target.value });
         }}
       />
       <br />
-      <button
-        onClick={() => {
-          dispatch(addTodo({ id: new Date().getTime(), todo: inputValue }));
-          setInputValue('');
-        }}
-      >
-        Add Todo
-      </button>
+      {arrTodo.find((todo: todoDataType) => todo.id === inputValue.id) ? (
+        <button
+          onClick={() => {
+            dispatch(updateTodo(inputValue));
+            setInputValue({ id: 0, todo: '' });
+          }}
+        >
+          Update
+        </button>
+      ) : (
+        <button
+          onClick={() => {
+            dispatch(
+              addTodo({ id: new Date().getTime(), todo: inputValue.todo })
+            );
+            setInputValue({ id: 0, todo: '' });
+          }}
+        >
+          Add Todo
+        </button>
+      )}
+
       <br />
       <div>
         {arrTodo?.length > 0 &&
@@ -36,6 +50,13 @@ export const Todo = () => {
             return (
               <div key={item?.id}>
                 <div>{item?.todo}</div>
+                <button
+                  onClick={() => {
+                    setInputValue({ id: item.id, todo: item.todo });
+                  }}
+                >
+                  Edit
+                </button>
                 <button
                   onClick={() => {
                     dispatch(deleteTodo(item));
