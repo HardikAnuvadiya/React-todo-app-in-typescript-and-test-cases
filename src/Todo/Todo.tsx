@@ -13,6 +13,7 @@ export const Todo = () => {
     <div>
       <label>Todo:</label>
       <input
+        data-testid="todo"
         type='text'
         className='todo-input'
         value={inputValue.todo}
@@ -42,7 +43,6 @@ export const Todo = () => {
           Add Todo
         </button>
       )}
-
       <br />
       <div>
         {arrTodo?.length > 0 &&
@@ -62,7 +62,7 @@ export const Todo = () => {
                     dispatch(deleteTodo(item));
                   }}
                 >
-                  delete
+                  Delete
                 </button>
               </div>
             );
