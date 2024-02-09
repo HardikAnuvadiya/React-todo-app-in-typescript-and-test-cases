@@ -1,8 +1,12 @@
 import { useState } from 'react';
-import { todo } from './types';
+import { todoDataType } from './types';
+import { RootState } from '../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTodo, deleteTodo } from '../store/todo/action';
 
 export const Todo = () => {
-  const [arrTodo, setArrTodo] = useState<any>([]);
+  const arrTodo = useSelector((state: RootState) => state.todoState.arrTodo);
+  const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState('');
 
   return (
@@ -19,10 +23,7 @@ export const Todo = () => {
       <br />
       <button
         onClick={() => {
-          setArrTodo([
-            ...arrTodo,
-            { id: new Date().getTime(), todo: inputValue },
-          ]);
+          dispatch(addTodo({ id: new Date().getTime(), todo: inputValue }));
           setInputValue('');
         }}
       >
@@ -31,16 +32,13 @@ export const Todo = () => {
       <br />
       <div>
         {arrTodo?.length > 0 &&
-          arrTodo?.map((item: todo) => {
+          arrTodo?.map((item: todoDataType) => {
             return (
-              <div key={item.id}>
+              <div key={item?.id}>
                 <div>{item?.todo}</div>
                 <button
                   onClick={() => {
-                    const newTodoArr = arrTodo.filter((todo: todo) => {
-                      if (todo.id !== item.id) return item;
-                    });
-                    setArrTodo(newTodoArr);
+                    dispatch(deleteTodo(item));
                   }}
                 >
                   delete
