@@ -3,18 +3,23 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { rootReducer } from '../store';
 import { Todo } from '../Todo/Todo';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import { thunk } from 'redux-thunk';
+import loggingMiddleware from '../middleware/loggingMiddleware';
 
 describe('Todo component', () => {
-  let store: any;
+  let mockStore: any;
   beforeEach(() => {
     // Reset the Redux store before each test
-    store = createStore(rootReducer);
+    mockStore = createStore(
+      rootReducer,
+      applyMiddleware(thunk, loggingMiddleware)
+    );
   });
 
   test('should render initial todo value', () => {
     render(
-      <Provider store={store}>
+      <Provider store={mockStore}>
         <Todo />
       </Provider>
     );
@@ -24,7 +29,7 @@ describe('Todo component', () => {
 
   test('should increment count when increment button is clicked', () => {
     render(
-      <Provider store={store}>
+      <Provider store={mockStore}>
         <Todo />
       </Provider>
     );
@@ -38,7 +43,7 @@ describe('Todo component', () => {
 
   test('should decrement count when decrement button is clicked', () => {
     render(
-      <Provider store={store}>
+      <Provider store={mockStore}>
         <Todo />
       </Provider>
     );
