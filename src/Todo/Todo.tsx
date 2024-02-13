@@ -13,7 +13,7 @@ export const Todo = () => {
     <div>
       <label>Todo:</label>
       <input
-        data-testid="todo"
+        data-testid="todo-input"
         type='text'
         className='todo-input'
         value={inputValue.todo}
@@ -28,6 +28,7 @@ export const Todo = () => {
             dispatch(updateTodo(inputValue));
             setInputValue({ id: 0, todo: '' });
           }}
+          data-testid={`update-btn-${inputValue.id}`}
         >
           Update
         </button>
@@ -38,7 +39,8 @@ export const Todo = () => {
               addTodo({ id: new Date().getTime(), todo: inputValue.todo })
             );
             setInputValue({ id: 0, todo: '' });
-          }}
+            }}
+            data-testid="add-todo-button"
         >
           Add Todo
         </button>
@@ -54,6 +56,7 @@ export const Todo = () => {
                   onClick={() => {
                     setInputValue({ id: item.id, todo: item.todo });
                   }}
+                  data-testid={`edit-btn-${item.id}`}
                 >
                   Edit
                 </button>
@@ -61,6 +64,7 @@ export const Todo = () => {
                   onClick={() => {
                     dispatch(deleteTodo(item));
                   }}
+                  data-testid={`delete-btn-${item.id}`}
                 >
                   Delete
                 </button>
