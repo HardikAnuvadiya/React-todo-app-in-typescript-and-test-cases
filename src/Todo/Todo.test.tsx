@@ -5,14 +5,29 @@ import { rootReducer } from '../store';
 import { applyMiddleware, createStore } from 'redux';
 import { thunk } from 'redux-thunk';
 import loggingMiddleware from '../middleware/loggingMiddleware';
+import { initialState } from '../store/todo/state';
 
 describe('Todo component', () => {
   let mockStore: any;
+
   beforeEach(() => {
-    mockStore = createStore(rootReducer, applyMiddleware(thunk, loggingMiddleware)); // Apply middleware
+    mockStore = createStore(
+      rootReducer,
+      applyMiddleware(thunk, loggingMiddleware)
+    ); // Apply middleware
   });
 
-  test('should add a todo when Add Todo button is clicked', () => {
+  test('should render initial todo value', () => {
+    render(
+      <Provider store={mockStore}>
+        <Todo />
+      </Provider>
+    );
+    const countElement = screen.getByTestId('todo-input');
+    expect(countElement.textContent).toBe(``);
+  });
+
+  test('should add a todo when Add Todo button is clicked and after add todo clear the input filed', () => {
     render(
       <Provider store={mockStore}>
         <Todo />
@@ -29,23 +44,6 @@ describe('Todo component', () => {
 
     const todoItem = screen.getByText('New Todo Item');
     expect(todoItem).toBeInTheDocument();
-  });
-
-  test('should clear input value after adding a todo', () => {
-    render(
-      <Provider store={mockStore}>
-        <Todo />
-      </Provider>
-    );
-
-    const inputElement = screen.getByRole('textbox');
-    const addButton = screen.getByText('Add Todo');
-
-    fireEvent.change(inputElement, {
-      target: { id: 123456, value: 'New Todo Item' },
-    });
-    fireEvent.click(addButton);
-
     expect(inputElement).toHaveValue('');
   });
 
@@ -64,53 +62,11 @@ describe('Todo component', () => {
     });
     fireEvent.click(addButton);
 
-    const deleteButton = screen.getByTestId('delete-btn-0');
+    const deleteButton = screen.getByTestId('delete-btn-New Todo Item');
     fireEvent.click(deleteButton);
 
     const deletedTodo = screen.queryByText('New Todo Item');
     expect(deletedTodo).not.toBeInTheDocument();
-  });
-  test('should render initial todo value', () => {
-    render(
-      <Provider store={mockStore}>
-        <Todo />
-      </Provider>
-    );
-    const countElement = screen.getByTestId('todo-input');
-    expect(countElement.textContent).toBe(``);
-  });
-
-  test('should increment count when increment button is clicked', () => {
-    render(
-      <Provider store={mockStore}>
-        <Todo />
-      </Provider>
-    );
-    const inputElement = screen.getByTestId('todo-input');
-    fireEvent.change(inputElement, { target: { value: 'Testing Todo' } });
-
-    const incrementButton = screen.getByTestId('add-todo-button');
-    fireEvent.click(incrementButton);
-    expect(screen.getByText('Testing Todo')).toBeInTheDocument();
-  });
-
-  test('should decrement count when decrement button is clicked', () => {
-    render(
-      <Provider store={mockStore}>
-        <Todo />
-      </Provider>
-    );
-    const inputElement = screen.getByTestId('todo-input');
-    fireEvent.change(inputElement, {
-      target: { id: 123456, value: 'Testing Todo' },
-    });
-
-    const incrementButton = screen.getByTestId('add-todo-button');
-    fireEvent.click(incrementButton);
-
-    const deleteButton = screen.getByTestId('delete-btn-0');
-    fireEvent.click(deleteButton);
-
-    expect(screen.queryByText('Testing Todo')).not.toBeInTheDocument();
+    expect(inputElement).toHaveValue('');
   });
 });

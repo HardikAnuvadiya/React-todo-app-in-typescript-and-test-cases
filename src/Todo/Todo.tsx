@@ -67,7 +67,7 @@ export const Todo = () => {
                   onClick={() => {
                     dispatch(deleteTodo(item));
                   }}
-                  data-testid={`delete-btn-${index}`}
+                  data-testid={`delete-btn-${item.todo}`}
                 >
                   Delete
                 </button>
