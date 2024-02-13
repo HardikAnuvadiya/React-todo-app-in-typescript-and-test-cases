@@ -1,7 +1,6 @@
-import React from 'react';
+import { deleteTodo } from '../../store/todo/action';
 import { todoDataType } from './types';
 import { useDispatch } from 'react-redux';
-import { deleteTodo } from '../store/todo/action';
 
 export const Listing = ({ arrTodo, setInputValue }: any) => {
   const dispatch = useDispatch();

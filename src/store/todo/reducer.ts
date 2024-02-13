@@ -1,4 +1,4 @@
-import { todoDataType } from '../../Todo/types';
+import { todoDataType } from '../../components/Todo/types';
 import { TodoState, initialState } from './state';
 
 export const todoReducer = (
@@ -12,18 +12,17 @@ export const todoReducer = (
         arrTodo: [...state.arrTodo, action.payload],
       };
     case 'DELETE_TODO':
-      const newTodoArr = state.arrTodo.filter((todo: todoDataType) => {
-        if (todo.id !== action?.payload?.id) return todo;
-      });
+      const newTodoArr = state.arrTodo.filter(
+        (todo: todoDataType) => todo.id !== action?.payload?.id
+      );
       return {
         ...state,
         arrTodo: newTodoArr,
       };
     case 'UPDATE_TODO':
-      const updatedTodoArr = state.arrTodo.map((todo: todoDataType) => {
-        if (todo.id === action?.payload?.id) return action.payload;
-        else return todo;
-      });
+      const updatedTodoArr = state.arrTodo.map((todo: todoDataType) =>
+        todo.id === action?.payload?.id ? action.payload : todo
+      );
       return {
         ...state,
         arrTodo: updatedTodoArr,

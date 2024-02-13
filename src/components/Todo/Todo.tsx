@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { todoDataType } from './types';
-import { RootState } from '../store';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, updateTodo } from '../store/todo/action';
 import { Listing } from './Lsiting';
+import { RootState } from '../../store';
+import { addTodo, updateTodo } from '../../store/todo/action';
 
 export const Todo = () => {
   const arrTodo = useSelector((state: RootState) => state.todoState.arrTodo);

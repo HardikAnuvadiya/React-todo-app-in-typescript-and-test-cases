@@ -1,4 +1,4 @@
-import { todoDataType } from "../../Todo/types";
+import { todoDataType } from "../../components/Todo/types";
 
 const addTodo = (payload: todoDataType) => {
   return {

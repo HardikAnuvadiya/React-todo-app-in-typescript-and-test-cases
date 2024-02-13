@@ -1,10 +1,10 @@
-import { render, fireEvent, screen, queryByText } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { Todo } from './Todo'; // Adjust the import path according to your directory structure
 import { Provider } from 'react-redux';
-import { rootReducer } from '../store';
 import { applyMiddleware, createStore } from 'redux';
 import { thunk } from 'redux-thunk';
-import loggingMiddleware from '../middleware/loggingMiddleware';
+import { rootReducer } from '../../store';
+import loggingMiddleware from '../../middleware/loggingMiddleware';
 
 describe('Todo component', () => {
   let mockStore: any;
@@ -64,7 +64,7 @@ describe('Todo component', () => {
     fireEvent.click(deleteButton);
 
     expect(screen.queryByText('New Todo Item')).toBeNull();
-    
+
     const deletedTodo = screen.queryByText('New Todo Item');
     expect(deletedTodo).not.toBeInTheDocument();
     expect(inputElement).toHaveValue('');
