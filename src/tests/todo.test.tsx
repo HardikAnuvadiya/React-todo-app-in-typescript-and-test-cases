@@ -1,17 +1,24 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import store from '../store';
+import { rootReducer } from '../store';
 import { Todo } from '../Todo/Todo';
+import { createStore } from 'redux';
 
 describe('Todo component', () => {
+  let store: any;
+  beforeEach(() => {
+    // Reset the Redux store before each test
+    store = createStore(rootReducer);
+  });
+
   test('should render initial todo value', () => {
     render(
       <Provider store={store}>
         <Todo />
       </Provider>
     );
-    const countElement = screen.getByTestId('todo');
+    const countElement = screen.getByTestId('todo-input');
     expect(countElement.textContent).toBe(``);
   });
 
@@ -21,7 +28,7 @@ describe('Todo component', () => {
         <Todo />
       </Provider>
     );
-    const inputElement = screen.getByTestId('todo');
+    const inputElement = screen.getByTestId('todo-input');
     fireEvent.change(inputElement, { target: { value: 'Testing Todo' } });
 
     const incrementButton = screen.getByText('Add Todo');
@@ -35,13 +42,13 @@ describe('Todo component', () => {
         <Todo />
       </Provider>
     );
-    const inputElement = screen.getByTestId('todo');
+    const inputElement = screen.getByTestId('todo-input');
     fireEvent.change(inputElement, { target: { value: 'Testing Todo' } });
 
     const incrementButton = screen.getByText('Add Todo');
     fireEvent.click(incrementButton);
 
-    const deleteButton = screen.getByTestId('Delete');
+    const deleteButton = screen.getByTestId('delete-btn-0');
     fireEvent.click(deleteButton);
     expect(screen.queryByText('Testing Todo')).not.toBeInTheDocument();
   });

@@ -13,7 +13,7 @@ export const Todo = () => {
     <div>
       <label>Todo:</label>
       <input
-        data-testid="todo-input"
+        data-testid='todo-input'
         type='text'
         className='todo-input'
         value={inputValue.todo}
@@ -36,11 +36,14 @@ export const Todo = () => {
         <button
           onClick={() => {
             dispatch(
-              addTodo({ id: new Date().getTime(), todo: inputValue.todo })
+              addTodo({
+                id: inputValue.id || new Date().getTime(),
+                todo: inputValue.todo,
+              })
             );
             setInputValue({ id: 0, todo: '' });
-            }}
-            data-testid="add-todo-button"
+          }}
+          data-testid='add-todo-button'
         >
           Add Todo
         </button>
@@ -48,7 +51,7 @@ export const Todo = () => {
       <br />
       <div>
         {arrTodo?.length > 0 &&
-          arrTodo?.map((item: todoDataType) => {
+          arrTodo?.map((item: todoDataType, index: number) => {
             return (
               <div key={item?.id}>
                 <div>{item?.todo}</div>
@@ -56,7 +59,7 @@ export const Todo = () => {
                   onClick={() => {
                     setInputValue({ id: item.id, todo: item.todo });
                   }}
-                  data-testid={`edit-btn-${item.id}`}
+                  data-testid={`edit-btn-${index}`}
                 >
                   Edit
                 </button>
@@ -64,7 +67,7 @@ export const Todo = () => {
                   onClick={() => {
                     dispatch(deleteTodo(item));
                   }}
-                  data-testid={`delete-btn-${item.id}`}
+                  data-testid={`delete-btn-${index}`}
                 >
                   Delete
                 </button>
