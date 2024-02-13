@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { todoDataType } from './types';
 import { RootState } from '../store';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, deleteTodo, updateTodo } from '../store/todo/action';
+import { addTodo, updateTodo } from '../store/todo/action';
+import { Listing } from './Lsiting';
 
 export const Todo = () => {
   const arrTodo = useSelector((state: RootState) => state.todoState.arrTodo);
@@ -49,32 +50,7 @@ export const Todo = () => {
         </button>
       )}
       <br />
-      <div>
-        {arrTodo?.length > 0 &&
-          arrTodo?.map((item: todoDataType, index: number) => {
-            return (
-              <div key={item?.id}>
-                <div>{item?.todo}</div>
-                <button
-                  onClick={() => {
-                    setInputValue({ id: item.id, todo: item.todo });
-                  }}
-                  data-testid={`edit-btn-${index}`}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => {
-                    dispatch(deleteTodo(item));
-                  }}
-                  data-testid={`delete-btn-${item.todo}`}
-                >
-                  Delete
-                </button>
-              </div>
-            );
-          })}
-      </div>
+      <Listing arrTodo={arrTodo} setInputValue={setInputValue} />
     </div>
   );
 };
