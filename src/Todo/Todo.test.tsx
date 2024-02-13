@@ -5,7 +5,6 @@ import { rootReducer } from '../store';
 import { applyMiddleware, createStore } from 'redux';
 import { thunk } from 'redux-thunk';
 import loggingMiddleware from '../middleware/loggingMiddleware';
-import { Listing } from './Lsiting';
 
 describe('Todo component', () => {
   let mockStore: any;
