@@ -1,13 +1,13 @@
 import { userDataType } from '../../components/Login/types';
 
-const login = (payload: userDataType) => {
+const logIn = (payload: userDataType) => {
   return {
     type: 'LOG_IN',
     payload: payload,
   };
 };
 
-const logOut = (payload: userDataType) => {
+const logOut = (payload?: userDataType) => {
   return {
     type: 'LOG_OUT',
     payload: payload,
@@ -21,4 +21,4 @@ const updateUser = (payload: userDataType) => {
   };
 };
 
-export { login, logOut, updateUser };
+export { logIn, logOut, updateUser };

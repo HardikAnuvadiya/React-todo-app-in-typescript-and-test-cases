@@ -1,17 +1,27 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { logIn } from '../../store/user/action';
+import { userDataType } from './types';
 
 export const Login = () => {
-  const [value, setValue] = useState({
+  const [value, setValue] = useState<userDataType>({
     username: '',
     password: '',
+    token: false,
   });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  function login() {
+    dispatch(logIn({ ...value, token: true }));
+    navigate('/');
+    setValue({ username: '', password: '', token: false });
+  }
 
   return (
     <div>
       <title>Login</title>
-      <label htmlFor="">Username: </label>
+      <label htmlFor=''>Username: </label>
       <input
         type='text'
         value={value.username}
@@ -22,7 +32,7 @@ export const Login = () => {
         }}
       />
       <br />
-      <label htmlFor="">Password: </label>
+      <label htmlFor=''>Password: </label>
       <input
         type='password'
         value={value.password}
@@ -33,14 +43,7 @@ export const Login = () => {
         }}
       />
       <br />
-      <button
-        onClick={() => {
-          navigate('/');
-          setValue({ username: '', password: '' });
-        }}
-      >
-        Login
-      </button>
+      <button onClick={login}>Login</button>
     </div>
   );
 };
