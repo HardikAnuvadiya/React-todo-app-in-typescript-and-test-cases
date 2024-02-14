@@ -3,9 +3,11 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { thunk } from 'redux-thunk'; // Import Redux Thunk middleware
 import { todoReducer } from './todo/reducer';
 import loggingMiddleware from '../middleware/loggingMiddleware';
+import { userReducer } from './user/reducer';
 
 const rootReducer: any = combineReducers({
   todoState: todoReducer,
+  userState: userReducer,
 });
 
 const store = createStore(
