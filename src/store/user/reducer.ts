@@ -19,7 +19,7 @@ export const userReducer = (
     case 'UPDATE_USER':
       return {
         ...state,
-        user: {...state.user, username: action.payload},
+        user: { ...state.user, username: action.payload },
       };
     default:
       return state;

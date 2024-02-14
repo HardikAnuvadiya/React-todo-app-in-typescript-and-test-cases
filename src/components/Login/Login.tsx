@@ -12,7 +12,7 @@ export const Login = () => {
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  function login() {
+  async function login() {
     dispatch(logIn({ ...value, token: true }));
     navigate('/');
     setValue({ username: '', password: '', token: false });
