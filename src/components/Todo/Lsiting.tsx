@@ -19,7 +19,7 @@ export const Listing = ({ arrTodo, setInputValue, setVisible }: any) => {
                     setVisible(true);
                     setInputValue({ id: item.id, todo: item.todo });
                   }}
-                  data-testid={`edit-btn-${index}`}
+                  data-testid={`edit-btn-${item.todo}`}
                 >
                   Edit
                 </button>

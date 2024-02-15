@@ -18,13 +18,14 @@ export const Todo = () => {
         onClick={() => {
           setVisible(true);
         }}
-        data-testid="add-todo-button"
+        data-testid="Add-diloage"
       >
         Add
       </button>
       <br />
       <Dialog
         header="Add TODO"
+        closable={false}
         visible={visible}
         style={{ width: "20vw" }}
         onHide={() => setVisible(false)}
@@ -45,7 +46,7 @@ export const Todo = () => {
               setVisible(false);
               setInputValue({ id: 0, todo: "" });
             }}
-            data-testid={`update-btn-${inputValue.id}`}
+            data-testid="update-btn"
           >
             Update
           </button>
@@ -61,9 +62,9 @@ export const Todo = () => {
               setInputValue({ id: 0, todo: "" });
               setVisible(false);
             }}
-            data-testid="add-todo-button"
+            data-testid="todo-add-button"
           >
-            Add
+            Add TODO
           </button>
         )}
       </Dialog>
