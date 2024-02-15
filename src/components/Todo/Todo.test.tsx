@@ -1,19 +1,14 @@
 import { render, fireEvent, screen } from '@testing-library/react';
 import { Todo } from './Todo'; // Adjust the import path according to your directory structure
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import { thunk } from 'redux-thunk';
-import { rootReducer } from '../../store';
-import loggingMiddleware from '../../middleware/loggingMiddleware';
+import configureMockStore from 'redux-mock-store';
+import store from '../../store';
 
 describe('Todo component', () => {
   let mockStore: any;
 
   beforeEach(() => {
-    mockStore = createStore(
-      rootReducer,
-      applyMiddleware(thunk, loggingMiddleware)
-    ); // Apply middleware
+    mockStore = configureMockStore()(store);
   });
 
   test('should render initial todo value', () => {

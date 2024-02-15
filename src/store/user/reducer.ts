@@ -8,8 +8,8 @@ export const userReducer = (
   switch (action.type) {
     case 'LOG_IN':
       if (
-        state?.user?.username === action?.payload?.username &&
-        state?.user?.password === action?.payload?.password
+        'hardik.anuvadiya@gtcsys.com' === action?.payload?.username &&
+        '123' === action?.payload?.password
       ) {
         return {
           ...state,

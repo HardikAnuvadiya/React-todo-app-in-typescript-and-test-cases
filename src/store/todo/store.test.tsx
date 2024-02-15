@@ -1,17 +1,12 @@
-import { applyMiddleware, createStore } from 'redux';
-import { rootReducer } from '..';
-import { thunk } from 'redux-thunk';
+import configureMockStore from 'redux-mock-store';
+import store from '..';
 import { addTodo, deleteTodo, updateTodo } from './action';
-import loggingMiddleware from '../../middleware/loggingMiddleware';
 
 describe('Redux Store', () => {
   let mockStore: any;
 
   beforeEach(() => {
-    mockStore = createStore(
-      rootReducer,
-      applyMiddleware(thunk, loggingMiddleware)
-    );
+    mockStore = configureMockStore()(store);
   });
 
   test('initial state', async () => {

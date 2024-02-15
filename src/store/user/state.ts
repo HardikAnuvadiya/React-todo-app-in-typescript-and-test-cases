@@ -1,7 +1,7 @@
 const userInitialState = {
   user: {
-    username: 'hardik.anuvadiya@gtcsys.com',
-    password: '123',
+    username: '',
+    password: '',
     token: false,
   },
 };
