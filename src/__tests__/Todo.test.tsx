@@ -1,8 +1,8 @@
 import { render, fireEvent, screen } from '@testing-library/react';
-import { Todo } from './Todo'; // Adjust the import path according to your directory structure
+import { Todo } from '../components/Todo/Todo'; // Adjust the import path according to your directory structure
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import store from '../../store';
+import store from '../store';
 
 describe('Todo component', () => {
   let mockStore: any;

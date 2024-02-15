@@ -1,6 +1,6 @@
 import configureMockStore from 'redux-mock-store';
-import store from '..';
-import { addTodo, deleteTodo, updateTodo } from './action';
+import store from '../store';
+import { addTodo, deleteTodo, updateTodo } from '../store/todo/action';
 
 describe('Redux Store', () => {
   let mockStore: any;
