@@ -18,11 +18,14 @@ export const userReducer = (
       } else {
         return state;
       }
-
     case 'LOG_OUT':
       return {
         ...state,
-        user: {},
+        user: {
+          username: '',
+          password: '',
+          token: false,
+        },
       };
     case 'UPDATE_USER':
       return {

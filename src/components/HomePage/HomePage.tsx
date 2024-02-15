@@ -1,13 +1,19 @@
 import React from 'react';
 import { Todo } from '../Todo/Todo';
-import { persister } from '../../store';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../../store/user/action';
+import { useNavigate } from 'react-router-dom';
 
 export const HomePage: React.FC = () => {
+  const dispatch = useDispatch<any>();
+  const navigate = useNavigate();
+
   return (
     <div>
       <button
         onClick={async () => {
-          return await persister.purge();
+          dispatch(logOut());
+          navigate('/login');
         }}
       >
         Logout

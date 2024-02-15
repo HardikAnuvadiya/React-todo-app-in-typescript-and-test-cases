@@ -55,4 +55,4 @@ const store = createStore(
 export type RootState = ReturnType<typeof rootReducer>;
 export default store;
 export { rootReducer };
-export const persister = persistStore(store);
+export const persistor = persistStore(store);
