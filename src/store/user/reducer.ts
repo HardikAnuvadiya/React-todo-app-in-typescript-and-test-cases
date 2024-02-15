@@ -7,10 +7,18 @@ export const userReducer = (
 ) => {
   switch (action.type) {
     case 'LOG_IN':
-      return {
-        ...state,
-        user: action.payload,
-      };
+      if (
+        state?.user?.username === action?.payload?.username &&
+        state?.user?.password === action?.payload?.password
+      ) {
+        return {
+          ...state,
+          user: { ...action.payload, token: true },
+        };
+      } else {
+        return state;
+      }
+
     case 'LOG_OUT':
       return {
         ...state,
