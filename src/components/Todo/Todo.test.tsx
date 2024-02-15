@@ -2,10 +2,18 @@ import { applyMiddleware, createStore } from "redux";
 import { thunk } from "redux-thunk";
 import store, { rootReducer } from "../../store";
 import loggingMiddleware from "../../middleware/loggingMiddleware";
-
 import { render, fireEvent, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { Todo } from "./Todo";
+const consoleError = console.error; // Save a reference to the original console.error function
+
+beforeEach(() => {
+  console.error = jest.fn(); // Replace console.error with a mock function
+});
+
+afterEach(() => {
+  console.error = consoleError; // Restore the original console.error function
+});
 
 describe("Todo component", () => {
   let mockStore: any;
