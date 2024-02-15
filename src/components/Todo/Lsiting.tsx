@@ -1,9 +1,10 @@
-import { deleteTodo } from '../../store/todo/action';
-import { todoDataType } from './types';
-import { useDispatch } from 'react-redux';
+import { deleteTodo } from "../../store/todo/action";
+import { todoDataType } from "./types";
+import { useDispatch } from "react-redux";
 
-export const Listing = ({ arrTodo, setInputValue }: any) => {
+export const Listing = ({ arrTodo, setInputValue, setVisible }: any) => {
   const dispatch = useDispatch();
+
   return (
     <div>
       <h2>List of Todos</h2>
@@ -15,9 +16,10 @@ export const Listing = ({ arrTodo, setInputValue }: any) => {
                 <div>{item?.todo}</div>
                 <button
                   onClick={() => {
+                    setVisible(true);
                     setInputValue({ id: item.id, todo: item.todo });
                   }}
-                  data-testid={`edit-btn-${index}`}
+                  data-testid={`edit-btn-${item.todo}`}
                 >
                   Edit
                 </button>
