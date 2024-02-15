@@ -2,7 +2,7 @@ const userInitialState = {
   user: {
     username: '',
     password: '',
-    token: '',
+    token: false,
   },
 };
 

@@ -27,6 +27,11 @@ export const todoReducer = (
         ...state,
         arrTodo: updatedTodoArr,
       };
+    case 'CLEAR':
+      return {
+        ...state,
+        arrTodo: [],
+      };
     default:
       return state;
   }

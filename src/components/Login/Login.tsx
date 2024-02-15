@@ -12,10 +12,14 @@ export const Login = () => {
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  function login() {
-    dispatch(logIn({ ...value, token: true }));
-    navigate('/');
-    setValue({ username: '', password: '', token: false });
+  async function login() {
+    if (value.username.length > 0 && value.password.length > 0) {
+      const result = dispatch(logIn(value));
+      console.log('result', result);
+
+      navigate('/');
+      setValue({ ...value, username: '', password: '', token: false });
+    }
   }
 
   return (
@@ -24,6 +28,7 @@ export const Login = () => {
       <label htmlFor=''>Username: </label>
       <input
         type='text'
+        // required
         value={value.username}
         name='username'
         placeholder='test@gmail.com'
@@ -35,6 +40,7 @@ export const Login = () => {
       <label htmlFor=''>Password: </label>
       <input
         type='password'
+        // required
         value={value.password}
         name='password'
         placeholder='bs6567G23!!'

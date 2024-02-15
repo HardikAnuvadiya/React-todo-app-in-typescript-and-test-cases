@@ -7,19 +7,30 @@ export const userReducer = (
 ) => {
   switch (action.type) {
     case 'LOG_IN':
-      return {
-        ...state,
-        user: action.payload,
-      };
+      if (
+        'hardik.anuvadiya@gtcsys.com' === action?.payload?.username &&
+        '123' === action?.payload?.password
+      ) {
+        return {
+          ...state,
+          user: { ...action.payload, token: true },
+        };
+      } else {
+        return state;
+      }
     case 'LOG_OUT':
       return {
         ...state,
-        user: {},
+        user: {
+          username: '',
+          password: '',
+          token: false,
+        },
       };
     case 'UPDATE_USER':
       return {
         ...state,
-        user: {...state.user, username: action.payload},
+        user: { ...state.user, username: action.payload },
       };
     default:
       return state;
