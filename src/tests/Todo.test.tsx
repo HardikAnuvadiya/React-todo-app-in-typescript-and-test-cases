@@ -1,16 +1,16 @@
 import { render, fireEvent, screen } from '@testing-library/react';
 import { Todo } from '../components/Todo/Todo'; // Adjust the import path according to your directory structure
 import { Provider } from 'react-redux';
-import { testStore } from '../mocks/storage.mock';
 import { clearTodo } from '../store/todo/action';
+import store from '../store';
 
 describe('Todo component', () => {
   beforeEach(() => {
-    testStore.dispatch(clearTodo());
+    store.dispatch(clearTodo());
   });
   test('should render initial todo value', () => {
     render(
-      <Provider store={testStore}>
+      <Provider store={store}>
         <Todo />
       </Provider>
     );
@@ -20,7 +20,7 @@ describe('Todo component', () => {
 
   test('should add a todo when Add Todo button is clicked and after add todo clear the input filed', () => {
     render(
-      <Provider store={testStore}>
+      <Provider store={store}>
         <Todo />
       </Provider>
     );
@@ -39,7 +39,7 @@ describe('Todo component', () => {
 
   test('should delete a todo when delete button is clicked', () => {
     render(
-      <Provider store={testStore}>
+      <Provider store={store}>
         <Todo />
       </Provider>
     );
