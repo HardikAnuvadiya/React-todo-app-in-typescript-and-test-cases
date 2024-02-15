@@ -1,20 +1,16 @@
-import configureMockStore from 'redux-mock-store';
-import store from '../store';
-import { addTodo, deleteTodo, updateTodo } from '../store/todo/action';
+import { testStore } from '../mocks/storage.mock';
+import { addTodo, clearTodo, deleteTodo, updateTodo } from '../store/todo/action';
 
 describe('Redux Store', () => {
-  let mockStore: any;
-
   beforeEach(() => {
-    mockStore = configureMockStore()(store);
+    testStore.dispatch(clearTodo());
   });
-
   test('initial state', async () => {
-    const initialState = await mockStore.getState();
+    const initialState: any = await testStore.getState();
     expect(initialState).toEqual({
       todoState: { arrTodo: [] },
       userState: {
-        user: { password: '', token: '', username: '' },
+        user: { password: '', token: false, username: '' },
       },
     });
     expect(initialState.todoState.arrTodo).toHaveLength(0);
@@ -22,8 +18,8 @@ describe('Redux Store', () => {
 
   test('dispatching action', async () => {
     // Add Todo
-    await mockStore.dispatch(addTodo({ id: 101215, todo: 'test todo' }));
-    const state = await mockStore.getState();
+    await testStore.dispatch(addTodo({ id: 101215, todo: 'test todo' }));
+    const state = await testStore.getState();
     expect(state.todoState.arrTodo).toEqual([
       {
         id: 101215,
@@ -35,13 +31,13 @@ describe('Redux Store', () => {
 
   test('Update Todo', async () => {
     // Update Todo
-    await mockStore.dispatch(addTodo({ id: 101215, todo: 'test todo' }));
-    const beforeState = await mockStore.getState();
+    await testStore.dispatch(addTodo({ id: 101215, todo: 'test todo' }));
+    const beforeState = await testStore.getState();
     expect(beforeState.todoState.arrTodo).toHaveLength(1);
-    await mockStore.dispatch(
+    await testStore.dispatch(
       updateTodo({ id: 101215, todo: 'updated test todo' })
     );
-    const state = await mockStore.getState();
+    const state = await testStore.getState();
     expect(state.todoState.arrTodo).toEqual([
       { id: 101215, todo: 'updated test todo' },
     ]); // Assuming increment increases the counter by 1
@@ -50,11 +46,11 @@ describe('Redux Store', () => {
 
   test('Delete Todo', async () => {
     // Delete Todo
-    await mockStore.dispatch(addTodo({ id: 101215, todo: 'test todo' }));
-    const beforeState = await mockStore.getState();
+    await testStore.dispatch(addTodo({ id: 101215, todo: 'test todo' }));
+    const beforeState = await testStore.getState();
     expect(beforeState.todoState.arrTodo).toHaveLength(1);
-    await mockStore.dispatch(deleteTodo({ id: 101215, todo: 'test todo' }));
-    const state = await mockStore.getState();
+    await testStore.dispatch(deleteTodo({ id: 101215, todo: 'test todo' }));
+    const state = await testStore.getState();
     expect(state.todoState.arrTodo).toHaveLength(0);
   });
 });

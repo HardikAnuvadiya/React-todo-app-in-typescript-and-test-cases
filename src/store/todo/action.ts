@@ -1,4 +1,4 @@
-import { todoDataType } from "../../components/Todo/types";
+import { todoDataType } from '../../components/Todo/types';
 
 const addTodo = (payload: todoDataType) => {
   return {
@@ -21,4 +21,10 @@ const updateTodo = (payload: todoDataType) => {
   };
 };
 
-export { addTodo, deleteTodo, updateTodo };
+const clearTodo = () => {
+  return {
+    type: 'CLEAR',
+  };
+};
+
+export { addTodo, deleteTodo, updateTodo, clearTodo };

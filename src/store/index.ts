@@ -51,7 +51,7 @@ const store = createStore(
   persistedReducer,
   applyMiddleware(thunk, loggingMiddleware)
 ); // Apply middleware
-
+  
 export type RootState = ReturnType<typeof rootReducer>;
 export default store;
 export { rootReducer };

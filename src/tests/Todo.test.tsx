@@ -1,19 +1,16 @@
 import { render, fireEvent, screen } from '@testing-library/react';
 import { Todo } from '../components/Todo/Todo'; // Adjust the import path according to your directory structure
 import { Provider } from 'react-redux';
-import configureMockStore from 'redux-mock-store';
-import store from '../store';
+import { testStore } from '../mocks/storage.mock';
+import { clearTodo } from '../store/todo/action';
 
 describe('Todo component', () => {
-  let mockStore: any;
-
   beforeEach(() => {
-    mockStore = configureMockStore()(store);
+    testStore.dispatch(clearTodo());
   });
-
   test('should render initial todo value', () => {
     render(
-      <Provider store={mockStore}>
+      <Provider store={testStore}>
         <Todo />
       </Provider>
     );
@@ -23,7 +20,7 @@ describe('Todo component', () => {
 
   test('should add a todo when Add Todo button is clicked and after add todo clear the input filed', () => {
     render(
-      <Provider store={mockStore}>
+      <Provider store={testStore}>
         <Todo />
       </Provider>
     );
@@ -42,7 +39,7 @@ describe('Todo component', () => {
 
   test('should delete a todo when delete button is clicked', () => {
     render(
-      <Provider store={mockStore}>
+      <Provider store={testStore}>
         <Todo />
       </Provider>
     );
@@ -58,7 +55,7 @@ describe('Todo component', () => {
     const deleteButton = screen.getByTestId('delete-btn-New Todo Item');
     fireEvent.click(deleteButton);
 
-    expect(screen.queryByText('New Todo Item')).toBeNull();
+    // expect(screen.queryByText('New Todo Item')).toBeNull();
 
     const deletedTodo = screen.queryByText('New Todo Item');
     expect(deletedTodo).not.toBeInTheDocument();
