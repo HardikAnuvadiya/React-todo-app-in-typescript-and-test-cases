@@ -4,6 +4,8 @@ import store from "../store";
 import App from "../App";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { Todo } from "../components/Todo/Todo";
+import { HomePage } from "../components/HomePage/HomePage";
+import { Login } from "../components/Login/Login";
 const consoleError = console.error; // Save a reference to the original console.error function
 
 beforeEach(() => {
@@ -15,7 +17,7 @@ afterEach(() => {
 });
 
 describe("TodoApp", () => {
-  test("renders learn react link", () => {
+  test("renders App", () => {
     render(
       <Provider store={store}>
         <App />
@@ -23,25 +25,87 @@ describe("TodoApp", () => {
     );
   });
 
-  test("renders TodoList component for '/' route", () => {
-    // const history = createMemoryHistory();
+  test("log in test.", () => {
+    render(
+      <Provider store={store}>
+        <MemoryRouter initialEntries={["/login"]}>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<HomePage />} />
+          </Routes>
+        </MemoryRouter>
+      </Provider>
+    );
+    expect(screen.getByTestId("login")).toBeInTheDocument();
+    const input = screen.getByTestId("username");
+    fireEvent.change(input, {
+      target: { value: "hardik.anuvadiya@gtcsys.com" }
+    });
+    fireEvent.change(screen.getByTestId("password"), {
+      target: { value: "123" }
+    });
+    fireEvent.click(screen.getByTestId("Log-in"));
+    expect(screen.getByTestId("Log-out")).toBeInTheDocument();
+    fireEvent.click(screen.getByTestId("Log-out"));
+    expect(screen.getByTestId("Log-in")).toBeInTheDocument();
+  });
+
+  test("log in with error test.", () => {
+    render(
+      <Provider store={store}>
+        <MemoryRouter initialEntries={["/login"]}>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<HomePage />} />
+          </Routes>
+        </MemoryRouter>
+      </Provider>
+    );
+    expect(screen.getByTestId("login")).toBeInTheDocument();
+    const input = screen.getByTestId("username");
+
+    fireEvent.change(input, {
+      target: { value: "" }
+    });
+
+    fireEvent.change(screen.getByTestId("password"), {
+      target: { value: "Please enter both username and password." }
+    });
+    fireEvent.click(screen.getByTestId("Log-in"));
+    expect(screen.getByText("Please enter username.")).toBeInTheDocument();
+
+    fireEvent.change(input, {
+      target: { value: "hardik.anuvadiya@gtcsys.com" }
+    });
+    fireEvent.change(screen.getByTestId("password"), {
+      target: { value: "" }
+    });
+    fireEvent.click(screen.getByTestId("Log-in"));
+    expect(screen.getByText("Please enter password.")).toBeInTheDocument();
+
+    fireEvent.change(input, {
+      target: { value: "" }
+    });
+
+    fireEvent.change(screen.getByTestId("password"), {
+      target: { value: "123" }
+    });
+    fireEvent.click(screen.getByTestId("Log-in"));
+    expect(screen.getByText("Please enter username.")).toBeInTheDocument();
+  });
+
+  test("renders TODO component for '/' route", () => {
     render(
       <Provider store={store}>
         <MemoryRouter initialEntries={["/"]}>
           <Routes>
+            <Route path="/login" element={<Login />} />
             <Route path="/" element={<Todo />} />
           </Routes>
         </MemoryRouter>
       </Provider>
     );
 
-    // fireEvent.click(screen.getByTestId("Add-diloage"));
-
     expect(screen.getByTestId("Add-diloage")).toBeInTheDocument();
-    // const items = screen.getByTestId("list");
-    // expect(items.children.length).toBe(3);
-    // const signUpBtn = screen.getByTestId("text");
-    // fireEvent.click(signUpBtn);
-    // expect(history.location.pathname).toBe("/todo/:id");
   });
 });
