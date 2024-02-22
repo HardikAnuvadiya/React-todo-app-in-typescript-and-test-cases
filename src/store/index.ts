@@ -5,7 +5,6 @@ import { todoReducer } from './todo/reducer';
 import loggingMiddleware from '../middleware/loggingMiddleware';
 import { userReducer } from './user/reducer';
 import { createTransform, persistReducer, persistStore } from 'redux-persist';
-// import storage from 'redux-persist/es/storage';
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import CryptoJS from 'crypto-js';
 
